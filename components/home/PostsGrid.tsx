@@ -22,14 +22,9 @@ const PostsGrid: FC<ComponentProps> = ({ blogposts } : ComponentProps) => {
         const firstTimeout = setTimeout(() => {
             setClasses([styles.card, styles.card2])
         }, 300)
-      
-        const secondTimeout = setTimeout(() => {
-            setClasses([styles.card3])
-        }, 1800)
         
         return () => {
             clearInterval(firstTimeout)
-            clearInterval(secondTimeout)
         }
     }, [])
 
@@ -47,7 +42,7 @@ const PostsGrid: FC<ComponentProps> = ({ blogposts } : ComponentProps) => {
                 />
                 <div className={styles.posts}>
                     {blogposts.map((value, index) => (
-                        <Card className={classes.join(' ')} key={index}>
+                        <Card className={classes.join(' ')} key={index} component='article'>
                             <Link href={`post/${value.slug}`}>
                                 <CardActionArea>
                                     <CardMedia
@@ -60,7 +55,7 @@ const PostsGrid: FC<ComponentProps> = ({ blogposts } : ComponentProps) => {
                                         <Typography gutterBottom variant='h5' component='h5'>
                                             {value.title}
                                         </Typography>
-                                        <Typography variant='body2' color='text.secondary'>
+                                        <Typography variant='body2'>
                                             {value.description}
                                         </Typography>
                                     </CardContent>
