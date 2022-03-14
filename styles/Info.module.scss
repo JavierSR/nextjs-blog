@@ -1,0 +1,91 @@
+.me {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  margin: auto;
+  left: -100px;
+  top: 120px;
+
+  img {
+    border-radius: 50%;
+  }
+}
+  
+.ig {
+  width: 80px;
+  height: 80px;
+  position: absolute;
+  left: 22%;
+  top: 30%;
+}
+  
+.twitter {
+  width: 80px;
+  height: 80px;
+  position: absolute;
+  top: 46%;
+}
+  
+.linkedin {
+  width: 80px;
+  height: 80px;
+  position: absolute;
+  top: 15%;
+  left: 15%;
+}
+  
+.text-container {
+  border-radius: 50%;
+  background-color: #FFF;
+  width: 400px;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-left: auto;
+  box-shadow:
+    0 -1.8px 2.2px rgba(0, 0, 0, 0.034),
+    0 6.7px 5.3px rgba(0, 0, 0, 0.048),
+    0 12.5px 10px rgba(0, 0, 0, 0.06),
+    0 22.3px 17.9px rgba(0, 0, 0, 0.072),
+    0 41.8px 33.4px rgba(0, 0, 0, 0.086),
+    0 100px 80px rgba(0, 0, 0, 0.12);
+
+  h1 {
+    margin-top: 50px;
+  }
+
+  p {
+    margin-top: 0;
+    max-width: 60%;
+  }
+}
+  
+.info {
+  padding: 0 4rem;
+  margin-top: auto;
+  margin-bottom: 10rem;
+}
+
+@media screen and (max-width: 1440px) {
+  .info {
+    padding: 0 3rem;
+    margin-bottom: 5rem;
+  }
+}
+
+@media screen and (max-width: 867px) {
+  .info {
+    padding: 0 4rem;
+    margin: 4rem;
+    max-height: unset;
+  }
+}
+  
+@media screen and (max-width: 480px) {
+  .info {
+    padding: 1rem;
+    margin: 1rem;
+  }
+}

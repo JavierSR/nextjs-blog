@@ -3,5 +3,6 @@ export default interface Blogpost {
     slug: string
     publishDate: string,
     content: string,
-    thumbnail: string
+    thumbnail: string,
+    description: string
 }
