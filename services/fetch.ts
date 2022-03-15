@@ -1,7 +1,9 @@
 import client from './contentfulClient'
-import { adaptBlogposts } from './responseAdapter'
+import { adaptBlogposts, adaptGeneralInfo } from './responseAdapter'
 
-export const getBlogposts = async () => adaptBlogposts(await client.getEntries('blogposts'))
+export const getGeneralInfo = async () => adaptGeneralInfo(await client.getEntries({ content_type: 'generalInfo' })) 
+
+export const getBlogposts = async () => adaptBlogposts(await client.getEntries({ content_type: 'blogposts' }))
 
 export const getBlogpostBySlug = async (slug: string) => {
     const matchedBlogposts = await client.getEntries({

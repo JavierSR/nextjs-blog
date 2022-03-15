@@ -92,6 +92,21 @@
   }
 }
 
+.about {
+  text-align: center;
+  margin-bottom: 5rem;
+
+  > div {
+    width: 100%;
+    padding: 4rem;
+  }
+
+  a {
+    text-decoration: underline;
+    color: blue;
+  }
+}
+
 .me {
   position: relative;
   margin-bottom: 5rem;
@@ -114,8 +129,8 @@
   width: 80px;
   height: 80px;
   position: absolute;
-  left: 53%;
-  top: 30%;
+  left: 68%;
+  top: 28%;
 }
   
 .twitter {
@@ -129,8 +144,8 @@
   width: 80px;
   height: 80px;
   position: absolute;
-  top: 11%;
-  left: 15%;
+  top: 8%;
+  left: 50%;
 }
   
 .text-container {
