@@ -49,7 +49,7 @@ const PostsGrid: FC<ComponentProps> = ({ blogposts } : ComponentProps) => {
                                         component='img'
                                         height='140'
                                         image={value.thumbnail}
-                                        alt='green iguana'
+                                        alt={value.title}
                                     />
                                     <CardContent>
                                         <Typography gutterBottom variant='h5' component='h5'>

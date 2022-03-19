@@ -5,4 +5,6 @@ export default interface Blogpost {
     content: string
     thumbnail: string
     description: string
+    readingEstimate: string
+    author: string
 }
