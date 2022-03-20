@@ -15,6 +15,8 @@ import styles from '../../styles/Post.module.scss'
 export const getStaticPaths: GetStaticPaths = async () => {
     const blogposts: Blogpost[] = await getBlogposts()
     const paths = blogposts.map((value) => ({ params: { pid: value.slug } }))
+    console.log({paths})
+    console.log('--------------------')
     return {
         paths,
         fallback: true
@@ -25,9 +27,11 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const slug = params?.pid
   const [post]: Blogpost[] = await getBlogpostBySlug(slug as string)
   const generalInfo: GeneralInfo = await getGeneralInfo()
+  console.log({post})
+  console.log('--------------------')
   return {
       props: {
-          post,
+          post: post || {},
           generalInfo
       },
   }
