@@ -10,6 +10,10 @@ declare interface ComponentProps {
     generalInfo: GeneralInfo
 }
 
+declare global {
+    interface Window { isDesktop: boolean }
+}
+
 const Header: FC<ComponentProps> = ({ generalInfo } : ComponentProps) => {
     const [isDesktop, setIsDesktop] = useState <boolean | null>(null)
     const [showSections, setShowSections] = useState <boolean> (false)
@@ -21,7 +25,9 @@ const Header: FC<ComponentProps> = ({ generalInfo } : ComponentProps) => {
     }
 
     const handleResize = () => {
-        setIsDesktop(window.innerWidth > 560)
+        const isDesktopSize = window.innerWidth > 560
+        setIsDesktop(isDesktopSize)
+        window.isDesktop = isDesktopSize
     }
 
     const startScroller = (element: HTMLElement) => {
@@ -37,7 +43,6 @@ const Header: FC<ComponentProps> = ({ generalInfo } : ComponentProps) => {
         if (typeof window !== 'undefined') {
             window.addEventListener('resize', handleResize);
             handleResize();
-            
         }
 
         return () => {

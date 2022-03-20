@@ -34,7 +34,7 @@ const Menu = ({ scrollTo, references } : MenuProps ) => {
                     </a>
                 </div>
                 <nav className={styles.nav}>
-                    <a onClick={() => scrollTo(references.top)}>Inicio</a>
+                    <a href='/'>Inicio</a>
                     <a onClick={() => scrollTo(references.description)}>Este blog</a>
                     <a onClick={() => scrollTo(references.profile)}>Sobre mi</a>
                 </nav>

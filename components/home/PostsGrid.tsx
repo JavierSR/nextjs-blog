@@ -6,6 +6,7 @@ import CardContent from '@mui/material/CardContent'
 import CardMedia from '@mui/material/CardMedia'
 import Typography from '@mui/material/Typography'
 import { CardActionArea } from '@mui/material'
+import Scrollbar from 'smooth-scrollbar'
 
 import styles from '../../styles/PostsGrid.module.scss'
 import Blogpost from '../../models/blogpost.model'
@@ -17,14 +18,30 @@ declare interface ComponentProps {
 
 const PostsGrid: FC<ComponentProps> = ({ blogposts } : ComponentProps) => {
     const [classes, setClasses] = useState([styles.card])
-    
+    const [scroller, setScroller] = useState <null | Scrollbar> (null)
+
+    const startScroller = (element: HTMLElement) => {
+        const scrollOptions = {
+            damping : 0.05,
+        }
+        setScroller(Scrollbar.init(element, scrollOptions))
+    }
+
     useEffect(() => {
         const firstTimeout = setTimeout(() => {
             setClasses([styles.card, styles.card2])
         }, 300)
         
+        const element = document.querySelector('#scrollable-posts') as HTMLElement
+        if (typeof window !== 'undefined' && window.isDesktop) {
+            startScroller(element)
+        }
+
         return () => {
             clearInterval(firstTimeout)
+            if(scroller) {
+                Scrollbar.destroy(element)
+            }
         }
     }, [])
 
@@ -40,29 +57,31 @@ const PostsGrid: FC<ComponentProps> = ({ blogposts } : ComponentProps) => {
                     placeholder='blur'
                     className={styles.background}
                 />
-                <div className={styles.posts}>
-                    {blogposts.map((value, index) => (
-                        <Card className={classes.join(' ')} key={index} component='article'>
-                            <Link href={`post/${value.slug}`}>
-                                <CardActionArea>
-                                    <CardMedia
-                                        component='img'
-                                        height='140'
-                                        image={value.thumbnail}
-                                        alt={value.title}
-                                    />
-                                    <CardContent>
-                                        <Typography gutterBottom variant='h5' component='h5'>
-                                            {value.title}
-                                        </Typography>
-                                        <Typography variant='body2'>
-                                            {value.description}
-                                        </Typography>
-                                    </CardContent>
-                                </CardActionArea>
-                            </Link>
-                        </Card>
-                    ))}
+                <div id='scrollable-posts'>
+                    <div className={styles.posts}>
+                        {blogposts.map((value, index) => (
+                            <Card className={classes.join(' ')} key={index} component='article'>
+                                <Link href={`post/${value.slug}`}>
+                                    <CardActionArea>
+                                        <CardMedia
+                                            component='img'
+                                            height='140'
+                                            image={value.thumbnail}
+                                            alt={value.title}
+                                        />
+                                        <CardContent>
+                                            <Typography gutterBottom variant='h5' component='h5'>
+                                                {value.title}
+                                            </Typography>
+                                            <Typography variant='body2'>
+                                                {value.description}
+                                            </Typography>
+                                        </CardContent>
+                                    </CardActionArea>
+                                </Link>
+                            </Card>
+                        ))}
+                    </div>
                 </div>
             </div>
         </section>
