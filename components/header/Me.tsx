@@ -17,7 +17,7 @@ const Me = ({ generalInfo, reference } : { generalInfo: GeneralInfo, reference :
             />
         </div>
         <div className={styles.ig}>
-            <a href={generalInfo.ig} target='_blank'>
+            <a href={generalInfo.ig} target='_blank' rel='noopener noreferrer'>
                 <Image
                     src={IgIcon}
                     alt='Instagram'
@@ -26,7 +26,7 @@ const Me = ({ generalInfo, reference } : { generalInfo: GeneralInfo, reference :
             </a>
         </div>
         <div className={styles.twitter}>
-            <a href={generalInfo.twitter} target='_blank'>
+            <a href={generalInfo.twitter} target='_blank' rel='noopener noreferrer'>
                 <Image
                     src={TwitterIcon}
                     alt='Twitter'
@@ -35,7 +35,7 @@ const Me = ({ generalInfo, reference } : { generalInfo: GeneralInfo, reference :
             </a>
         </div>
         <div className={styles.linkedin}>
-            <a href={generalInfo.linkedin} target='_blank'>
+            <a href={generalInfo.linkedin} target='_blank' rel='noopener noreferrer'>
                 <Image
                     src={LinkeInIcon}
                     alt='LinkedIn'

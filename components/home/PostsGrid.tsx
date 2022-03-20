@@ -61,23 +61,25 @@ const PostsGrid: FC<ComponentProps> = ({ blogposts } : ComponentProps) => {
                     <div className={styles.posts}>
                         {blogposts.map((value, index) => (
                             <Card className={classes.join(' ')} key={index} component='article'>
-                                <Link href={`post/${value.slug}`}>
-                                    <CardActionArea>
-                                        <CardMedia
-                                            component='img'
-                                            height='140'
-                                            image={value.thumbnail}
-                                            alt={value.title}
-                                        />
-                                        <CardContent>
-                                            <Typography gutterBottom variant='h5' component='h5'>
-                                                {value.title}
-                                            </Typography>
-                                            <Typography variant='body2'>
-                                                {value.description}
-                                            </Typography>
-                                        </CardContent>
-                                    </CardActionArea>
+                                <Link href={`/post/${value.slug}`}>
+                                    <a>
+                                        <CardActionArea>
+                                            <CardMedia
+                                                component='img'
+                                                height='140'
+                                                image={value.thumbnail}
+                                                alt={value.title}
+                                            />
+                                            <CardContent>
+                                                <Typography gutterBottom variant='h5' component='h5'>
+                                                    {value.title}
+                                                </Typography>
+                                                <Typography variant='body2'>
+                                                    {value.description}
+                                                </Typography>
+                                            </CardContent>
+                                        </CardActionArea>
+                                    </a>
                                 </Link>
                             </Card>
                         ))}

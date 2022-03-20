@@ -9,8 +9,14 @@ const getFirstParagraph = (nodes : any) => {
     if(!nodes) {
         return ''
     }
-    const [firstSection] = nodes
-    const { content } = firstSection
+    let firstParagraph
+    for (const node of nodes) {
+        if(node.nodeType !== 'embedded-asset-block') {
+            firstParagraph = node
+            break
+        }
+    }
+    const { content } = firstParagraph
     return content.map((item: any) => item.value).join()
 }
 
