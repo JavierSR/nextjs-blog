@@ -15,8 +15,6 @@ import styles from '../../styles/Post.module.scss'
 export const getStaticPaths: GetStaticPaths = async () => {
     const blogposts: Blogpost[] = await getBlogposts()
     const paths = blogposts.map((value) => ({ params: { pid: value.slug } }))
-    console.log({paths})
-    console.log('--------------------')
     return {
         paths,
         fallback: true
@@ -27,8 +25,6 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const slug = params?.pid
   const [post]: Blogpost[] = await getBlogpostBySlug(slug as string)
   const generalInfo: GeneralInfo = await getGeneralInfo()
-  console.log({post})
-  console.log('--------------------')
   return {
       props: {
           post: post || {},
@@ -40,7 +36,9 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 const Post = ({ post, generalInfo }: { post: Blogpost, generalInfo: GeneralInfo }) => {
     const [scroller, setScroller] = useState <null | Scrollbar> (null)
     const [postClasses, setPostClasses] = useState <string[]> ([styles.post])
-
+    const originalPost = {...post}
+    console.log({originalPost})
+    console.log('--------------------')
     const startScroller = (element: HTMLElement) => {
         const scrollOptions = {
             damping : 0.05,
@@ -59,18 +57,19 @@ const Post = ({ post, generalInfo }: { post: Blogpost, generalInfo: GeneralInfo 
         }
     }, [])
 
+    const postToRender = post || {}
     return (
         <Wrapper generalInfo={generalInfo}>
             <div id='post-content' className={styles.container}>
                 <div className={postClasses.join(' ')}>
-                    <h1>{post.title}</h1>
+                    <h1>{postToRender.title}</h1>
                     <div className={styles.postInfo}>
-                        <div><h6>Por {post.author}</h6> • <h6>{post.readingEstimate} READ</h6></div>
+                        <div><h6>Por {postToRender.author}</h6> • <h6>{postToRender.readingEstimate} READ</h6></div>
                         <div>
-                            <h6>{moment(post.publishDate).format('LL')}</h6>
+                            <h6>{moment(postToRender.publishDate).format('LL')}</h6>
                         </div>
                     </div>
-                    <section dangerouslySetInnerHTML={{ __html: post.content }}></section>
+                    <section dangerouslySetInnerHTML={{ __html: postToRender.content }}></section>
                     <Link href='/'>
                         <div className={styles.back}>
                             <Button variant='contained' startIcon={<SendIcon />}>Volver</Button>
