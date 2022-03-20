@@ -1,6 +1,7 @@
 .info {
   height: 100vh;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
   background: rgb(241, 241, 241);
   background: linear-gradient(156deg, rgb(241, 241, 241)0%, rgb(244, 245, 244)23%);
   padding: 0 4rem;
@@ -50,8 +51,10 @@
 }
 
 .logo {
-  margin-left: auto;
-  margin-right: auto;
+  margin: 0 auto;
+  position: relative;
+  width: 300px;
+  height: 139px;
 }
 
 .nav {
@@ -125,25 +128,26 @@
     border-radius: 50%;
   }
 }
-  
+$icon-size-desktop: 80px;
+
 .ig {
-  width: 80px;
-  height: 80px;
+  width: $icon-size-desktop;
+  height: $icon-size-desktop;
   position: absolute;
   left: 68%;
   top: 28%;
 }
   
 .twitter {
-  width: 80px;
-  height: 80px;
+  width: $icon-size-desktop;
+  height: $icon-size-desktop;
   position: absolute;
   top: 46%;
 }
   
 .linkedin {
-  width: 80px;
-  height: 80px;
+  width: $icon-size-desktop;
+  height: $icon-size-desktop;
   position: absolute;
   top: 8%;
   left: 50%;
@@ -168,21 +172,229 @@
   }
 }
 
-@media screen and (max-width: 1440px) {
+@media screen and (max-width: 1919px) {
   .info {
-    padding: 0 3rem;
+    padding: 0 2.5rem
+  }
+
+  .header {
+    
+    > div:first-child {
+      height: 400px;
+      width: 400px;
+    }
+  }
+
+  .about {
+    > div {
+      width: 440px;
+      height: 440px;
+      padding: 1rem 2.9rem;
+      overflow: hidden;
+    }
+    
+    p {
+      text-indent: 30px;
+      letter-spacing: -0.07px;
+      line-height: 1.3;
+    }
+  }
+
+  .twitter {
+    top: 46%;
+    left: -9%;
+  }
+
+  .nav {
+    margin: 2rem 3rem;
   }
 }
 
-@media screen and (max-width: 867px) {
+$circle-size-1440: 336px;
+
+@media screen and (max-width: 1440px) {
   .info {
-    padding: 0 4rem;
-    max-height: unset;
+    padding: 0;
+  }
+
+  .header {
+    padding: 0 2rem;
+
+    > div:first-child {
+      height: $circle-size-1440;
+      width: $circle-size-1440;
+    }
+
+    > div:last-child {
+      height: 200px;
+      width: 200px;
+      margin-top: 5rem;
+    }
+  }
+
+  .logo {
+    width: 225px;
+    height: 104.25px;
+  }
+
+  .nav {
+    margin: 2rem;
+  
+    a {
+      font-size: 20px;
+    }
+  }
+
+  .search {
+    padding: 2.5rem;
+  
+    svg {
+      font-size: 64px;
+    }
+  }
+
+  .about {
+    padding: 0 2rem;
+    margin-bottom: 10rem;
+    > div {
+      width: 100%;
+      height: auto;
+      padding: 1rem 1.5rem;
+    }
+    
+    p {
+      text-indent: unset;
+      letter-spacing: unset;
+      line-height: unset;
+    }
+
+    .shadow {
+      border-radius: 4%;
+    }
+  }
+
+  .twitter {
+    top: 1.5%;
+    left: 12%;
+  }
+
+  .text-container {
+    width: 385px;
+    height: 385px;
+    margin-left: 0;
+    margin-right: auto;
   }
 }
-  
-@media screen and (max-width: 480px) {
+
+$circle-size-980: 318px;
+@media screen and (max-width: 980px) {
+  .info {
+    height: auto;
+  }
+
+  .header {
+    padding: 0 1rem;
+    height: auto;
+
+    > div:first-child {
+      height: $circle-size-980;
+      width: $circle-size-980;
+      justify-content: flex-end;
+      padding: 1rem;
+    }
+
+    > div:last-child {
+      height: 170px;
+      width: 170px;
+      margin-bottom: 5rem;
+    }
+  }
+
+  .nav {
+    flex-direction: column;
+    align-items: center;
+    margin: 1rem;
+
+    a {
+      margin-bottom: 0.5rem;
+    }
+  }
+
+  .search {
+    padding: 1rem 2rem;
+    font-size: 12px;
+
+    label {
+      left: 15%;
+    }
+
+    svg {
+      font-size: 60px;
+    }
+  }
+
+  .text-container {
+    width: 330px;
+    height: 330px;
+  }
+
+  .profile {
+    width: 250px;
+    height: 250px;
+  }
+}
+
+$circle-size-mobile: 290px;
+
+@media screen and (max-width: 560px) {
   .info {
     padding: 1rem;
+  }
+
+  .header {
+    margin: 1rem auto;
+
+    > div:first-child {
+      height: $circle-size-mobile;
+      width: $circle-size-mobile;
+      margin: auto;
+    }
+  }
+
+  .about {
+    margin-top: 5rem;
+    margin-bottom: 5rem;
+
+    p {
+      text-align: left;
+    }
+  }
+
+  $icon-size-mobile: 60px;
+
+  .ig {
+    width: $icon-size-mobile;
+    height: $icon-size-mobile;
+    left: 59%;
+  }
+    
+  .twitter {
+    top: 7%;
+    width: $icon-size-mobile;
+    height: $icon-size-mobile;
+  }
+    
+  .linkedin {
+    left: 43%;
+    top: 12%;
+    width: $icon-size-mobile;
+    height: $icon-size-mobile;
+  }
+
+  .text-container {
+    width: 350px;
+    height: 350px;
+    margin-left: auto;
+    margin-right: 0;
   }
 }

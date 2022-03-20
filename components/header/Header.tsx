@@ -11,11 +11,17 @@ declare interface ComponentProps {
 }
 
 const Header: FC<ComponentProps> = ({ generalInfo } : ComponentProps) => {
+    const [isDesktop, setIsDesktop] = useState <boolean | null>(null)
+    const [showSections, setShowSections] = useState <boolean> (false)
     const [scroller, setScroller] = useState <null | Scrollbar> (null)
     const references: References = {
         top: useRef<HTMLElement>(null),
         profile: useRef<HTMLElement>(null),
         description: useRef<HTMLElement>(null),
+    }
+
+    const handleResize = () => {
+        setIsDesktop(window.innerWidth > 560)
     }
 
     const startScroller = (element: HTMLElement) => {
@@ -27,30 +33,64 @@ const Header: FC<ComponentProps> = ({ generalInfo } : ComponentProps) => {
     
     useEffect(() => {
         const element = document.querySelector('#scrollable-content') as HTMLElement
-        startScroller(element)
+
+        if (typeof window !== 'undefined') {
+            window.addEventListener('resize', handleResize);
+            handleResize();
+            
+        }
+
         return () => {
+            window.removeEventListener('resize', handleResize)
             if(scroller) {
                 Scrollbar.destroy(element)
             }
         }
     }, [])
 
+    useEffect(() => {
+        if(isDesktop && !scroller) {
+            const element = document.querySelector('#scrollable-content') as HTMLElement
+            startScroller(element)
+        }
+    }, [isDesktop])
+
     const scrollTo = (element: RefObject<HTMLElement>) => {
-        scroller?.scrollIntoView(element.current as HTMLElement, {
-            offsetTop: 15
-        })
+        setShowSections(true)
+        if(isDesktop) {
+            scroller?.scrollIntoView(element.current as HTMLElement, {
+                offsetTop: 15
+            })
+        }
+        else {
+            const executeScroll = () => element.current?.scrollIntoView({
+                behavior: 'smooth'
+            })
+
+            if(showSections) {
+                executeScroll()
+            }
+            else {}
+            setTimeout(() => {
+                executeScroll()
+            }, 500)
+        }
     }
     
     return (
         <aside className={styles.info} id='scrollable-content'>
             <Menu scrollTo={scrollTo} references={references}/>
-            <div ref={references.description as RefObject<HTMLDivElement>} className={styles.about}>
-                <div className={styles.shadow}>
-                    <h1>Píxeles sin contexto</h1>
-                    <div dangerouslySetInnerHTML={{__html: generalInfo.description}}></div>
-                </div>
-            </div>
-            <Me generalInfo={generalInfo} reference={references.profile}/>
+            {(showSections || isDesktop) && (
+                <>
+                    <div ref={references.description as RefObject<HTMLDivElement>} className={styles.about}>
+                        <div className={styles.shadow}>
+                            <h1>Píxeles sin contexto</h1>
+                            <p dangerouslySetInnerHTML={{__html: generalInfo.description}}></p>
+                        </div>
+                    </div>
+                    <Me generalInfo={generalInfo} reference={references.profile}/>
+                </>
+            )}
         </aside>
     )
 }
