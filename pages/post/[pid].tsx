@@ -36,9 +36,6 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 const Post = ({ post, generalInfo }: { post: Blogpost, generalInfo: GeneralInfo }) => {
     const [scroller, setScroller] = useState <null | Scrollbar> (null)
     const [postClasses, setPostClasses] = useState <string[]> ([styles.post])
-    const originalPost = {...post}
-    console.log({originalPost})
-    console.log('--------------------')
     const startScroller = (element: HTMLElement) => {
         const scrollOptions = {
             damping : 0.05,
@@ -57,19 +54,19 @@ const Post = ({ post, generalInfo }: { post: Blogpost, generalInfo: GeneralInfo 
         }
     }, [])
 
-    const postToRender = post || {}
+    const content: Blogpost = post || {}
     return (
         <Wrapper generalInfo={generalInfo}>
             <div id='post-content' className={styles.container}>
                 <div className={postClasses.join(' ')}>
-                    <h1>{postToRender.title}</h1>
+                    <h1>{content.title}</h1>
                     <div className={styles.postInfo}>
-                        <div><h6>Por {postToRender.author}</h6> • <h6>{postToRender.readingEstimate} READ</h6></div>
+                        <div><h6>Por {content.author}</h6> • <h6>{content.readingEstimate} READ</h6></div>
                         <div>
-                            <h6>{moment(postToRender.publishDate).format('LL')}</h6>
+                            <h6>{moment(content.publishDate).format('LL')}</h6>
                         </div>
                     </div>
-                    <section dangerouslySetInnerHTML={{ __html: postToRender.content }}></section>
+                    <section dangerouslySetInnerHTML={{ __html: content.content }}></section>
                     <Link href='/'>
                         <div className={styles.back}>
                             <Button variant='contained' startIcon={<SendIcon />}>Volver</Button>
