@@ -1,8 +1,18 @@
 import Head from 'next/head'
 import React from 'react'
+import Script from 'next/script'
 
 const Layout = ({ children } : { children: React.ReactNode }) => (
     <>
+        <Script strategy='lazyOnload' src='https://www.googletagmanager.com/gtag/js?id=G-SKYJYK1HCX'></Script>
+        <Script strategy='lazyOnload'>
+            {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments)}
+                gtag('js', new Date());
+                gtag('config', 'G-SKYJYK1HCX');
+            `}
+        </Script>
         <Head>
             <title>Píxeles sin contexto</title>
             <meta name='description' content='Mis opiniones y pensamientos' />
