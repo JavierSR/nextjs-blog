@@ -93,12 +93,17 @@
 
   label {
     left: 20%;
+    font-family: Charter;
   }
 }
 
 .about {
   text-align: center;
   margin-bottom: 5rem;
+
+  p {
+    font-family: Charter;
+  }
 
   > div {
     width: 100%;
@@ -128,6 +133,7 @@
     border-radius: 50%;
   }
 }
+
 $icon-size-desktop: 80px;
 
 .ig {
@@ -169,6 +175,7 @@ $icon-size-desktop: 80px;
   p {
     margin-top: 0;
     max-width: 60%;
+    font-family: Charter;
   }
 }
 

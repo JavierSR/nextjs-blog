@@ -20,6 +20,11 @@ a {
   src: url('../public/Staatliches-Regular.ttf');
 }
 
+@font-face {
+  font-family: 'Charter';
+  src: url('../public/Charter-Regular.ttf');
+}
+
 main {
   display: grid;
   grid-template-columns: 33% 1fr;

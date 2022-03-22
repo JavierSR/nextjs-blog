@@ -5,21 +5,6 @@ import { BLOCKS } from '@contentful/rich-text-types'
 
 import { documentToHtmlString } from '@contentful/rich-text-html-renderer'
 
-const getFirstParagraph = (nodes : any) => {
-    if(!nodes) {
-        return ''
-    }
-    let firstParagraph
-    for (const node of nodes) {
-        if(node.nodeType !== 'embedded-asset-block') {
-            firstParagraph = node
-            break
-        }
-    }
-    const { content } = firstParagraph
-    return content.map((item: any) => item.value).join()
-}
-
 const getImageUrlFromField = (content : any) => {
     return 'https:' + (content?.fields.file?.url || '')
 }
@@ -55,7 +40,7 @@ export const adaptBlogposts = (entry: Entry) : Blogpost[] => {
             ...fields,
             author: fields.author?.fields?.name || null,
             content: documentToHtmlString(fields.content, parseHTMLOptions),
-            description: getFirstParagraph(fields.content?.content),
+            description: fields.excerpt || null,
             thumbnail: getImageUrlFromField(fields.thumbnail)
         }
     })
