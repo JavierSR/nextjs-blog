@@ -4,8 +4,8 @@ import Script from 'next/script'
 
 const Layout = ({ children } : { children: React.ReactNode }) => (
     <>
-        <Script strategy='lazyOnload' src='https://www.googletagmanager.com/gtag/js?id=G-SKYJYK1HCX'></Script>
-        <Script strategy='lazyOnload'>
+        <Script id='google-tag-script' strategy='lazyOnload' src='https://www.googletagmanager.com/gtag/js?id=G-SKYJYK1HCX'></Script>
+        <Script id='google-analytics-script' strategy='lazyOnload'>
             {`
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){dataLayer.push(arguments)}
