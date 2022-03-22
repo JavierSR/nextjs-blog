@@ -1,3 +1,19 @@
+## Tech stack
+
+### Frontend
+
+- ReactJs + Typescript
+- NextJS for static generation
+- Sass as style preprocessor
+- MaterialUI for theming
+
+### Backend
+
+- Contentful headless CMS for retreiving content
+- Firebase realtime DB to handle post upvotes
+- Vercel pipeline for CI/CD
+
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
