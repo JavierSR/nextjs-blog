@@ -198,7 +198,7 @@ const Post = ({ post, generalInfo }: { post: Blogpost, generalInfo: GeneralInfo 
                                     <TwitterIcon />
                                 </a>
                                 <a 
-                                    href={`https://www.linkedin.com/sharing/share-offsite/?url=${postUrl}`}
+                                    href={`https://www.linkedin.com/sharing/share-offsite?url=${postUrl}`}
                                     target='_blank'
                                     rel='noopener noreferrer'
                                 >

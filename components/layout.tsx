@@ -15,7 +15,16 @@ const Layout = ({ children } : { children: React.ReactNode }) => (
         </Script>
         <Head>
             <title>Píxeles sin contexto</title>
-            <meta name='description' content='Mis opiniones y pensamientos' />
+            <meta name='description' content='Mis opiniones y pensamientos. Variedad de artículos, la mayoría sin mucho sentido.' />
+            <meta name='keywords' content='blog, opinión, tecnología, life style'/>
+            <meta name='author' content='Oscar Sandoval'/>
+            <meta property='og:title' content='Píxeles sin contexto' />
+            <meta property='og:description' content='Mis opiniones y pensamientos. Variedad de artículos, la mayoría sin mucho sentido.' />
+            <meta property='og:type' content='website' />
+            <meta property='og:locale' content='es_MX' />
+            <meta property='og:image' content='../public/og_img.png' />
+            <meta property='og:url' content='https://pixelessincontexto.com' />
+            <link rel='canonical' href='https://pixelessincontexto.com' />
             <link rel='icon' href='/favicon.ico' />
         </Head>
         <main>
