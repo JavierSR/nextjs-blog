@@ -4,7 +4,7 @@ import { getBlogposts, getGeneralInfo } from '../services/fetch'
 import Blogpost from '../models/blogpost.model'
 import GeneralInfo from  '../models/generalInfo.model'
 import PostsGrid from '../components/home/PostsGrid'
-import Wrapper from '../components/Wrapper'
+import Layout from '../components/Layout'
 
 export const getStaticProps: GetStaticProps = async () => {
     const blogposts: Blogpost[] = await getBlogposts()
@@ -24,9 +24,9 @@ declare interface PageProps {
 }
 
 const Home: NextPage<PageProps> = ({ blogposts, generalInfo } : PageProps) => (
-    <Wrapper generalInfo={generalInfo}>
+    <Layout generalInfo={generalInfo}>
         <PostsGrid blogposts={blogposts}/>
-    </Wrapper>
+    </Layout>
 )
 
 export default Home

@@ -7,4 +7,5 @@ export default interface Blogpost {
     description: string
     readingEstimate: string
     author: string
+    keywords: string
 }
