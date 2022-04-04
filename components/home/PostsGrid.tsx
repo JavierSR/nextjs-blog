@@ -6,11 +6,11 @@ import CardContent from '@mui/material/CardContent'
 import CardMedia from '@mui/material/CardMedia'
 import Typography from '@mui/material/Typography'
 import { CardActionArea } from '@mui/material'
-import Scrollbar from 'smooth-scrollbar'
 
 import styles from '../../styles/PostsGrid.module.scss'
 import Blogpost from '../../models/blogpost.model'
 import HomeImage from '../../public/home_image.jpg'
+import Scroller from '../Scroller'
 
 declare interface ComponentProps {
     blogposts: Blogpost[]
@@ -18,30 +18,14 @@ declare interface ComponentProps {
 
 const PostsGrid: FC<ComponentProps> = ({ blogposts } : ComponentProps) => {
     const [classes, setClasses] = useState([styles.card])
-    const [scroller, setScroller] = useState <null | Scrollbar> (null)
-
-    const startScroller = (element: HTMLElement) => {
-        const scrollOptions = {
-            damping : 0.05,
-        }
-        setScroller(Scrollbar.init(element, scrollOptions))
-    }
 
     useEffect(() => {
         const firstTimeout = setTimeout(() => {
             setClasses([styles.card, styles.card2])
         }, 300)
-        
-        const element = document.querySelector('#scrollable-posts') as HTMLElement
-        if (typeof window !== 'undefined' && window.isDesktop) {
-            startScroller(element)
-        }
 
         return () => {
             clearInterval(firstTimeout)
-            if(scroller) {
-                Scrollbar.destroy(element)
-            }
         }
     }, [])
 
@@ -57,7 +41,7 @@ const PostsGrid: FC<ComponentProps> = ({ blogposts } : ComponentProps) => {
                     placeholder='blur'
                     className={styles.background}
                 />
-                <div id='scrollable-posts'>
+                <Scroller component='Home'>
                     <div className={styles.posts}>
                         {blogposts.map((value, index) => (
                             <Card className={classes.join(' ')} key={index} component='article'>
@@ -84,7 +68,7 @@ const PostsGrid: FC<ComponentProps> = ({ blogposts } : ComponentProps) => {
                             </Card>
                         ))}
                     </div>
-                </div>
+                </Scroller>
             </div>
         </section>
     )

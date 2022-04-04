@@ -1,7 +1,4 @@
 .info {
-  height: 100vh;
-  overflow-y: auto;
-  overflow-x: hidden;
   background: rgb(241, 241, 241);
   background: linear-gradient(156deg, rgb(241, 241, 241)0%, rgb(244, 245, 244)23%);
   padding: 0 4rem;
@@ -26,9 +23,11 @@
 }
 
 .header {
-  margin: auto;
   height: 100vh;
-  
+  min-height: 840px;
+  margin: auto;
+  padding-top: 7rem;
+
   > div:first-child {
     height: 450px;
     width: 450px;
@@ -36,7 +35,6 @@
     flex-direction: column;
     justify-content: center;
     padding: 2rem;
-    margin-top: 7rem;
   }
 
   > div:last-child {
@@ -120,7 +118,7 @@
 
 .me {
   position: relative;
-  margin-bottom: 5rem;
+  padding-bottom: 5rem;
 }
 
 .profile {
@@ -229,6 +227,7 @@ $circle-size-1440: 336px;
 
   .header {
     padding: 0 2rem;
+    padding-top: 7rem;
 
     > div:first-child {
       height: $circle-size-1440;
@@ -304,6 +303,7 @@ $circle-size-980: 318px;
 
   .header {
     padding: 0 1rem;
+    padding-top: 7rem;
     height: auto;
 
     > div:first-child {
@@ -368,7 +368,9 @@ $circle-size-mobile: 290px;
 
   .header {
     margin: 1rem auto;
-
+    padding: 5rem 0;
+    min-height: unset;
+    
     > div:first-child {
       height: $circle-size-mobile;
       width: $circle-size-mobile;
@@ -377,7 +379,7 @@ $circle-size-mobile: 290px;
   }
 
   .about {
-    margin-top: 5rem;
+    padding-top: 3rem;
     margin-bottom: 5rem;
 
     p {

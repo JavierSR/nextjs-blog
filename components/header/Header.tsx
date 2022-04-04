@@ -1,23 +1,19 @@
-import { FC, useEffect, useState, useRef, RefObject } from 'react'
-import Scrollbar from 'smooth-scrollbar'
+import { FC, useEffect, useState, useRef, RefObject, useContext } from 'react'
 
 import GeneralInfo from  '../../models/generalInfo.model'
 import styles from '../../styles/Header.module.scss'
 import Me from './Me'
 import Menu, { References } from './Menu'
+import Scroller from '../Scroller'
+import { Context } from '../../contexts/deviceContext'
 
 declare interface ComponentProps {
     generalInfo: GeneralInfo
 }
 
-declare global {
-    interface Window { isDesktop: boolean }
-}
-
 const Header: FC<ComponentProps> = ({ generalInfo } : ComponentProps) => {
-    const [isDesktop, setIsDesktop] = useState <boolean | null>(null)
+    const { state, dispatch } = useContext(Context)
     const [showSections, setShowSections] = useState <boolean> (false)
-    const [scroller, setScroller] = useState <null | Scrollbar> (null)
     const references: References = {
         top: useRef<HTMLElement>(null),
         profile: useRef<HTMLElement>(null),
@@ -26,20 +22,13 @@ const Header: FC<ComponentProps> = ({ generalInfo } : ComponentProps) => {
 
     const handleResize = () => {
         const isDesktopSize = window.innerWidth > 560
-        setIsDesktop(isDesktopSize)
-        window.isDesktop = isDesktopSize
-    }
-
-    const startScroller = (element: HTMLElement) => {
-        const scrollOptions = {
-            damping : 0.05,
-        }
-        setScroller(Scrollbar.init(element, scrollOptions))
+        dispatch({
+            type: 'setIsDesktop',
+            value: isDesktopSize
+        });
     }
     
     useEffect(() => {
-        const element = document.querySelector('#scrollable-content') as HTMLElement
-
         if (typeof window !== 'undefined') {
             window.addEventListener('resize', handleResize);
             handleResize();
@@ -47,56 +36,43 @@ const Header: FC<ComponentProps> = ({ generalInfo } : ComponentProps) => {
 
         return () => {
             window.removeEventListener('resize', handleResize)
-            if(scroller) {
-                Scrollbar.destroy(element)
-            }
         }
     }, [])
 
-    useEffect(() => {
-        if(isDesktop && !scroller) {
-            const element = document.querySelector('#scrollable-content') as HTMLElement
-            startScroller(element)
-        }
-    }, [isDesktop])
-
     const scrollTo = (element: RefObject<HTMLElement>) => {
         setShowSections(true)
-        if(isDesktop) {
-            scroller?.scrollIntoView(element.current as HTMLElement, {
-                offsetTop: 15
-            })
-        }
-        else {
-            const executeScroll = () => element.current?.scrollIntoView({
-                behavior: 'smooth'
-            })
 
-            if(showSections) {
-                executeScroll()
-            }
-            else {}
-            setTimeout(() => {
-                executeScroll()
-            }, 500)
+        const executeScroll = () => element.current?.scrollIntoView({
+            behavior: 'smooth'
+        })
+
+        if(showSections) {
+            executeScroll()
         }
+        else {}
+        setTimeout(() => {
+            executeScroll()
+        }, 300)
     }
     
+    const { isDesktop } = state
     return (
-        <aside className={styles.info} id='scrollable-content'>
-            <Menu scrollTo={scrollTo} references={references}/>
-            {(showSections || isDesktop) && (
-                <>
-                    <div ref={references.description as RefObject<HTMLDivElement>} className={styles.about}>
-                        <div className={styles.shadow}>
-                            <h1>Píxeles sin contexto</h1>
-                            <p dangerouslySetInnerHTML={{__html: generalInfo.description}}></p>
+        <Scroller>
+            <aside className={styles.info}>
+                <Menu scrollTo={scrollTo} references={references}/>
+                {(showSections || isDesktop) && (
+                    <>
+                        <div ref={references.description as RefObject<HTMLDivElement>} className={styles.about}>
+                            <div className={styles.shadow}>
+                                <h1>Píxeles sin contexto</h1>
+                                <p dangerouslySetInnerHTML={{__html: generalInfo.description}}></p>
+                            </div>
                         </div>
-                    </div>
-                    <Me generalInfo={generalInfo} reference={references.profile}/>
-                </>
-            )}
-        </aside>
+                        <Me generalInfo={generalInfo} reference={references.profile}/>
+                    </>)
+                }
+            </aside>
+        </Scroller>
     )
 }
 

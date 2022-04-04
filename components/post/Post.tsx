@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import Scrollbar from 'smooth-scrollbar'
 import moment from 'moment'
 import Button from '@mui/material/Button'
 import SendIcon from '@mui/icons-material/ReplyAll'
@@ -18,6 +17,7 @@ import LinkIcon from '@mui/icons-material/Link'
 import Snackbar from '@mui/material/Snackbar'
 import Grow, { GrowProps } from '@mui/material/Grow'
 import { getPostVotes, updateVote } from '../../services/firebase'
+import Scroller from '../Scroller'
 
 const DOMAIN_NAME = 'pixelessincontexto.com'
 const STORAGE_KEY  ='pixeles-sin-contexto_votes'
@@ -25,7 +25,6 @@ const STORAGE_KEY  ='pixeles-sin-contexto_votes'
 const GrowTransition = (props: GrowProps) => <Grow {...props} />
 
 const Post = ({ post }: { post: Blogpost }) => {
-    const [scroller, setScroller] = useState <null | Scrollbar> (null)
     const [postUrl, setPostUrl] = useState <string> ('')
     const [postClasses, setPostClasses] = useState <string[]> ([styles.post])
     const [currentAlert, setCurrentAlert] = useState <string | null> (null)
@@ -34,14 +33,6 @@ const Post = ({ post }: { post: Blogpost }) => {
         upvotes: 0,
         downvotes: 0
     })
-
-    const startScroller = (element: HTMLElement) => {
-        const scrollOptions = {
-            damping : 0.05,
-        }
-        setPostClasses([styles.post, styles['post-loaded']])
-        setScroller(Scrollbar.init(element, scrollOptions))
-    }
     
     const loadVotes = async () => {
         const votes: Votes = await getPostVotes(post.slug)
@@ -49,19 +40,12 @@ const Post = ({ post }: { post: Blogpost }) => {
     }
 
     useEffect(() => {
-        const element = document.querySelector('#post-content') as HTMLElement
-        startScroller(element)
+        loadVotes()
+        setPostClasses([styles.post, styles['post-loaded']])
 
         if(typeof window !== 'undefined') {
             setPostUrl(`https://www.${DOMAIN_NAME}${window?.location?.pathname}`)
             setVoteHistory(JSON.parse(sessionStorage.getItem(STORAGE_KEY) || '{}'))
-        }
-
-        loadVotes()
-        return () => {
-            if(scroller) {
-                Scrollbar.destroy(element)
-            }
         }
     }, [])
 
@@ -135,84 +119,86 @@ const Post = ({ post }: { post: Blogpost }) => {
 
     const content: Blogpost = post || {}
     return (
-        <div id='post-content' className={styles.container}>
-            <div className={postClasses.join(' ')}>
-                <h1>{content.title}</h1>
-                <div className={styles.postInfo}>
-                    <div><h6>Por {content.author}</h6> • <h6>{content.readingEstimate} READ</h6></div>
-                    <div>
-                        <h6>{moment(content.publishDate).format('LL')}</h6>
+        <Scroller component='Home'>
+            <div id='post-content' className={styles.container}>
+                <div className={postClasses.join(' ')}>
+                    <h1>{content.title}</h1>
+                    <div className={styles.postInfo}>
+                        <div><h6>Por {content.author}</h6> • <h6>{content.readingEstimate} READ</h6></div>
+                        <div>
+                            <h6>{moment(content.publishDate).format('LL')}</h6>
+                        </div>
                     </div>
+                    <section dangerouslySetInnerHTML={{ __html: content.content }}></section>
+                    <Snackbar 
+                        open={!!currentAlert}
+                        onClose={handleClose}
+                        TransitionComponent={GrowTransition}
+                        message={currentAlert}
+                        key={GrowTransition.name}
+                        anchorOrigin={{vertical: 'bottom', horizontal: 'right'}}
+                    />
+                    <section className={styles.bottom}>
+                        <div className={styles.share}>
+                            <h6>Compartir</h6>
+                            <div>
+                                <a 
+                                    href={`https://www.facebook.com/sharer/sharer.php?u=${postUrl}`}
+                                    target='_blank'
+                                    rel='noopener noreferrer'
+                                >
+                                    <FacebookRoundedIcon />
+                                </a>
+                                <a 
+                                    href={`https://twitter.com/intent/tweet?text=${postUrl}`}
+                                    target='_blank'
+                                    rel='noopener noreferrer'
+                                >
+                                    <TwitterIcon />
+                                </a>
+                                <a 
+                                    href={`https://www.linkedin.com/sharing/share-offsite?url=${postUrl}`}
+                                    target='_blank'
+                                    rel='noopener noreferrer'
+                                >
+                                    <LinkedInIcon />
+                                </a>
+                                <a 
+                                    href={`https://api.whatsapp.com/send?text=${postUrl}`}
+                                    target='_blank'
+                                    rel='noopener noreferrer'
+                                    data-action='share/whatsapp/share'
+                                >
+                                    <WhatsAppIcon />
+                                </a>
+                                <a 
+                                    onClick={copyLinkToClipboard}
+                                    rel='noopener noreferrer'>
+                                    <LinkIcon />
+                                </a>
+                            </div>
+                        </div>
+                        <div className={styles.votes}>
+                            <div>
+                                <div className={styles.positive}>
+                                    <span>{votes.upvotes}</span>
+                                    <ArrowUpwardIcon onClick={upvote}/>
+                                </div>
+                                <div className={styles.negative}>
+                                    <span>{votes.downvotes}</span>
+                                    <ArrowDownwardIcon onClick={downvote}/>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <Link href='/'>
+                        <div className={styles.back}>
+                            <Button variant='contained' startIcon={<SendIcon />}>Volver</Button>
+                        </div>
+                    </Link>
                 </div>
-                <section dangerouslySetInnerHTML={{ __html: content.content }}></section>
-                <Snackbar 
-                    open={!!currentAlert}
-                    onClose={handleClose}
-                    TransitionComponent={GrowTransition}
-                    message={currentAlert}
-                    key={GrowTransition.name}
-                    anchorOrigin={{vertical: 'bottom', horizontal: 'right'}}
-                />
-                <section className={styles.bottom}>
-                    <div className={styles.share}>
-                        <h6>Compartir</h6>
-                        <div>
-                            <a 
-                                href={`https://www.facebook.com/sharer/sharer.php?u=${postUrl}`}
-                                target='_blank'
-                                rel='noopener noreferrer'
-                            >
-                                <FacebookRoundedIcon />
-                            </a>
-                            <a 
-                                href={`https://twitter.com/intent/tweet?text=${postUrl}`}
-                                target='_blank'
-                                rel='noopener noreferrer'
-                            >
-                                <TwitterIcon />
-                            </a>
-                            <a 
-                                href={`https://www.linkedin.com/sharing/share-offsite?url=${postUrl}`}
-                                target='_blank'
-                                rel='noopener noreferrer'
-                            >
-                                <LinkedInIcon />
-                            </a>
-                            <a 
-                                href={`https://api.whatsapp.com/send?text=${postUrl}`}
-                                target='_blank'
-                                rel='noopener noreferrer'
-                                data-action='share/whatsapp/share'
-                            >
-                                <WhatsAppIcon />
-                            </a>
-                            <a 
-                                onClick={copyLinkToClipboard}
-                                rel='noopener noreferrer'>
-                                <LinkIcon />
-                            </a>
-                        </div>
-                    </div>
-                    <div className={styles.votes}>
-                        <div>
-                            <div className={styles.positive}>
-                                <span>{votes.upvotes}</span>
-                                <ArrowUpwardIcon onClick={upvote}/>
-                            </div>
-                            <div className={styles.negative}>
-                                <span>{votes.downvotes}</span>
-                                <ArrowDownwardIcon onClick={downvote}/>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-                <Link href='/'>
-                    <div className={styles.back}>
-                        <Button variant='contained' startIcon={<SendIcon />}>Volver</Button>
-                    </div>
-                </Link>
             </div>
-        </div>
+        </Scroller>
     )
 }
 

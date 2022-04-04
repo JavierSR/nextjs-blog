@@ -48,7 +48,7 @@ const Menu = ({ scrollTo, references } : MenuProps ) => {
                 <div className={styles.shadow}>
                     <Box className={styles.search}>
                         <SearchIcon />
-                        <TextField label='Busqueda' variant='standard'/>
+                        <TextField variant='standard'/>
                     </Box>
                 </div>
             )}
