@@ -1,6 +1,7 @@
 .info {
   background: rgb(241, 241, 241);
-  background: linear-gradient(156deg, rgb(241, 241, 241)0%, rgb(244, 245, 244)23%);
+  background: linear-gradient(156deg, rgb(241, 241, 241) 0%, rgb(244, 245, 244) 23%);
+  background: -webkit-linear-gradient(156deg, rgb(241, 241, 241) 0%, rgb(244, 245, 244) 23%);
   padding: 0 4rem;
 
   h1, h2 {
