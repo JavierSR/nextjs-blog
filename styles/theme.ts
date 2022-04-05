@@ -1,4 +1,4 @@
-import { createTheme } from '@mui/material/styles';
+import { createTheme } from '@mui/material/styles'
 
 export default createTheme({
     typography: {
@@ -15,5 +15,5 @@ export default createTheme({
             main: '#000',
         },
     }
-});
+})
   

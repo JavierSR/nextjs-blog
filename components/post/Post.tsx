@@ -119,7 +119,7 @@ const Post = ({ post }: { post: Blogpost }) => {
 
     const content: Blogpost = post || {}
     return (
-        <Scroller component='Home'>
+        <Scroller>
             <div id='post-content' className={styles.container}>
                 <div className={postClasses.join(' ')}>
                     <h1>{content.title}</h1>
@@ -156,13 +156,13 @@ const Post = ({ post }: { post: Blogpost }) => {
                                 >
                                     <TwitterIcon />
                                 </a>
-                                <a 
+                                {/* <a 
                                     href={`https://www.linkedin.com/sharing/share-offsite?url=${postUrl}`}
                                     target='_blank'
                                     rel='noopener noreferrer'
                                 >
                                     <LinkedInIcon />
-                                </a>
+                                </a> */}
                                 <a 
                                     href={`https://api.whatsapp.com/send?text=${postUrl}`}
                                     target='_blank'

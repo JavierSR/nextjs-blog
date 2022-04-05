@@ -1,4 +1,4 @@
-import { FC, useEffect, useState, useRef, RefObject, useContext } from 'react'
+import { FC, useState, useRef, RefObject, useContext } from 'react'
 
 import GeneralInfo from  '../../models/generalInfo.model'
 import styles from '../../styles/Header.module.scss'
@@ -12,32 +12,13 @@ declare interface ComponentProps {
 }
 
 const Header: FC<ComponentProps> = ({ generalInfo } : ComponentProps) => {
-    const { state, dispatch } = useContext(Context)
+    const { state } = useContext(Context)
     const [showSections, setShowSections] = useState <boolean> (false)
     const references: References = {
         top: useRef<HTMLElement>(null),
         profile: useRef<HTMLElement>(null),
         description: useRef<HTMLElement>(null),
     }
-
-    const handleResize = () => {
-        const isDesktopSize = window.innerWidth > 560
-        dispatch({
-            type: 'setIsDesktop',
-            value: isDesktopSize
-        });
-    }
-    
-    useEffect(() => {
-        if (typeof window !== 'undefined') {
-            window.addEventListener('resize', handleResize);
-            handleResize();
-        }
-
-        return () => {
-            window.removeEventListener('resize', handleResize)
-        }
-    }, [])
 
     const scrollTo = (element: RefObject<HTMLElement>) => {
         setShowSections(true)

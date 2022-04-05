@@ -1,4 +1,4 @@
-import { RefObject } from 'react'
+import { RefObject, useContext } from 'react'
 import Image from 'next/image'
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
@@ -7,7 +7,7 @@ import Link from 'next/link'
 
 import styles from '../../styles/Header.module.scss'
 import Logo from '../../public/logo.png'
-import useWidth from '../../helpers/hooks/useWidth'
+import { Context } from '../../contexts/deviceContext'
 
 declare interface References {
     top: RefObject<HTMLElement>
@@ -21,7 +21,7 @@ declare interface MenuProps {
 }
 
 const Menu = ({ scrollTo, references } : MenuProps ) => {
-    const width = useWidth()
+    const { state } = useContext(Context)
     return (
         <header className={styles.header}>
             <div className={styles.shadow}>
@@ -44,7 +44,7 @@ const Menu = ({ scrollTo, references } : MenuProps ) => {
                     <a onClick={() => scrollTo(references.profile)}>Sobre mi</a>
                 </nav>
             </div>
-            {(width > 560) && (
+            {state.isDesktop && (
                 <div className={styles.shadow}>
                     <Box className={styles.search}>
                         <SearchIcon />

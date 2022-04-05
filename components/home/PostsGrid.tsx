@@ -41,7 +41,7 @@ const PostsGrid: FC<ComponentProps> = ({ blogposts } : ComponentProps) => {
                     placeholder='blur'
                     className={styles.background}
                 />
-                <Scroller component='Home'>
+                <Scroller>
                     <div className={styles.posts}>
                         {blogposts.map((value, index) => (
                             <Card className={classes.join(' ')} key={index} component='article'>

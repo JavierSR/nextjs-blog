@@ -3,6 +3,8 @@ import React from 'react'
 import Script from 'next/script'
 import Header from './header/Header'
 import GeneralInfo from  '../models/generalInfo.model'
+import { Context } from '../contexts/deviceContext'
+import { useEffect, useContext } from 'react'
 
 const domain = 'https://pixelessincontexto.com'
 
@@ -22,6 +24,28 @@ const Layout = (props : LayoutProps) => {
     const keywords = props.keywords || 'blog, opinión, tecnología, life style'
     const image = props.image || `${domain}/og_img.png`
     const url = props.slug ? `${domain}/post/${props.slug}` : domain
+
+    const { dispatch } = useContext(Context)
+
+    const handleResize = () => {
+        const isDesktopSize = window.screen.width > 560
+        dispatch({
+            type: 'setIsDesktop',
+            value: isDesktopSize
+        })
+    }
+    
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            window.addEventListener('resize', handleResize)
+            handleResize()
+        }
+
+        return () => {
+            window.removeEventListener('resize', handleResize)
+        }
+    }, [])
+    
     return (
         <>
             <Script id='google-tag-script' strategy='lazyOnload' src='https://www.googletagmanager.com/gtag/js?id=G-SKYJYK1HCX'></Script>
