@@ -30,7 +30,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 const BlogpostPage = ({ post, generalInfo } : { post: Blogpost, generalInfo: GeneralInfo }) => {
     const content: Blogpost = post || {}
     return (
-        <Layout 
+        <Layout
             generalInfo={generalInfo}
             title={`${content.title} - Píxeles sin contexto`}
             keywords={content.keywords}
