@@ -4,7 +4,7 @@ import { getBlogposts, getGeneralInfo } from '../services/fetch'
 import Blogpost from '../models/blogpost.model'
 import GeneralInfo from  '../models/generalInfo.model'
 import PostsGrid from '../components/home/PostsGrid'
-import Layout from '../components/Layout'
+import Layout from '../components/LayoutWrapper'
 
 export const getStaticProps: GetStaticProps = async () => {
     const blogposts: Blogpost[] = await getBlogposts()
