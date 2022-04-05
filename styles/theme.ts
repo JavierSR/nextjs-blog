@@ -12,7 +12,7 @@ export default createTheme({
     },
     palette: {
         primary: {
-            main: '#000',
+            main: 'rgb(3, 152, 158)',
         },
     }
 })

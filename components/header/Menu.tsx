@@ -6,7 +6,7 @@ import SearchIcon from '@mui/icons-material/Search'
 import Link from 'next/link'
 
 import styles from '../../styles/Header.module.scss'
-import Logo from '../../public/logo.png'
+import Logo from '../../public/logo.svg'
 import { Context } from '../../contexts/deviceContext'
 
 declare interface References {
